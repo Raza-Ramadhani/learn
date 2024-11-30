@@ -2,7 +2,7 @@
 
 export async function deKommaCheck(formData:FormData, rawText:string, words:Array<string>) {
         const correctWords = rawText.split(' ')
-        let commas = []
+        const commas = []
         for (let i = 0; i < words.length; i++) {
             const checkingWord = `${words[i]}${formData.get(i.toString()) == 'on' ? ',' : ''}`
             console.log(checkingWord + " - " + correctWords[i])
