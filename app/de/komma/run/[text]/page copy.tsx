@@ -1,4 +1,4 @@
-import Button from "@/app/ui/button"
+/*import Button from "@/app/ui/button"
 import { useRouter } from "next/navigation"
 
 export default async function Page({
@@ -45,4 +45,4 @@ export default async function Page({
             <Button text="Check" type="submit"/>
         </form>
     )
-}
+}*/

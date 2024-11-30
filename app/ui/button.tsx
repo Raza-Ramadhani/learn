@@ -1,7 +1,5 @@
 'use client'
 
-import { ButtonHTMLAttributes, DetailedHTMLProps } from "react"
-
 export default function Button({text, type}:{text:string, type:"button" | "submit" | "reset" | undefined}) {
     return(
         <button 
