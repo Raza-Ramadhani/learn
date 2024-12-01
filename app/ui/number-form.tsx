@@ -1,18 +1,17 @@
 'use client'
 
-import { mNumberCheck } from "@/app/lib/actions"
 import Button from "@/app/ui/button"
 import Success from "@/app/ui/successMath"
 import { useActionState, useEffect, useState } from "react"
 
 export function NumberForm() {
-    const lange = [
+    const lange:Array<{name:string,units:Array<{name:string,symbol:string,decimal:number}>}> = [
         {name: 'Gewicht', units: [
             {name: 'Miligramm', symbol:'mg', decimal:0.001},
             {name: 'Gramm', symbol:'g', decimal:1},
             {name: 'Kilogramm', symbol:'kg', decimal:1000},
-            {name: 'Tonnen', symbol:'t', decimal:1000000},
             {name: 'Kilogramm', symbol:'kg', decimal:1000},
+            {name: 'Tonnen', symbol:'t', decimal:1000000},
         ]},
         {name: 'Länge', units: [
             {name: 'Meter', symbol:'m', decimal:1},
@@ -30,7 +29,46 @@ export function NumberForm() {
         ]}
 
     ]
-    
+    function mNumberCheck(prevState: {randomEinheit:number,randomNumber:number,startUnitIndex:number,randomUnitIndex:number, correct:undefined|boolean},formData:FormData) {
+        const userNumber = formData.get('value') as unknown as number
+        const multiple = lange[prevState.randomEinheit].units[prevState.randomUnitIndex].decimal / lange[prevState.randomEinheit].units[prevState.startUnitIndex].decimal
+        console.log(prevState)
+        if(prevState.correct == true) {
+            const startUnitIndex = Math.floor(Math.random() * 4)
+            const indexUpOrDown = Math.floor(Math.random() * 1) + 1
+            
+            return {
+                randomEinheit: Math.floor(Math.random() *2),
+                randomNumber: Math.floor(Math.random() * 999), 
+                startUnitIndex: startUnitIndex, 
+                randomUnitIndex: startUnitIndex + indexUpOrDown < 5 ? startUnitIndex+ indexUpOrDown: startUnitIndex - indexUpOrDown,
+                correct: undefined,
+            }
+        }
+        if ((userNumber * multiple) == prevState.randomNumber) {
+            return{
+                randomEinheit: prevState.randomEinheit,
+                randomNumber: prevState.randomNumber, 
+                startUnitIndex: prevState.startUnitIndex, 
+                randomUnitIndex: prevState.randomUnitIndex,
+                correct: true,
+            }
+        }
+        else {
+            return{
+                randomEinheit: prevState.randomEinheit,
+                randomNumber: prevState.randomNumber, 
+                startUnitIndex: prevState.startUnitIndex, 
+                randomUnitIndex: prevState.randomUnitIndex,
+                correct: false,
+            }
+        }
+    /*        return {
+            randomNumber: Math.floor(Math.random() * 4), 
+            startUnitIndex: Math.floor(Math.random() * 4), 
+            randomUnitIndex: Math.floor(Math.random() * 4),
+        }*/
+    }
     const [state, submit] = useActionState(mNumberCheck,
         {
             randomEinheit: Math.floor(Math.random() *2),
@@ -47,12 +85,13 @@ export function NumberForm() {
     
     return(
         <div>
-            <h1 className="font-bold text-xl">Einheiten umrechenen</h1>
-            <form action={submit} className="flex flex-col w-full gap-2">
-            <h1>{isClient ? 'This is never prerendered' : 'Prerendered'}</h1>
+            <form action={submit} className="flex flex-col w-full gap-2 mt-4">
+            <h1 className="hidden">{isClient ? 'This is never prerendered' : 'Prerendered'}</h1>
 
-                <h1>{state.randomNumber} {JSON.stringify(lange[state.randomEinheit].units[state.startUnitIndex]?.symbol)} in {JSON.stringify(lange[state.randomEinheit].units[state.randomUnitIndex]?.name)}</h1>
-                <input type='number' placeholder="Zahl"  step={0.000001} name="value" className="w-full appearance-none text-5xl font-meduum font-sans focus:outline-none"/>
+                <h1 className="font-medium"><code className="bg-slate-300 rounded px-1">{state.randomNumber}{(lange[state.randomEinheit].units[state.startUnitIndex]?.symbol)}</code> in {(lange[state.randomEinheit].units[state.randomUnitIndex]?.name)}</h1>
+                <div className="text-5xl flex items-center bg-slate-100 p-2 rounded">
+                    <input type='number' placeholder="Zahl"  step={0.000001} name="value" className="w-full bg-transparent appearance-none text-5xl font-meduum font-sans focus:outline-none"/><h1>{lange[state.randomEinheit].units[state.randomUnitIndex].symbol}</h1>
+                </div>
                 {state.correct == false ? <h1 className="text-red-500">Etwas ist falsch</h1>:''}
                 <Button type="submit" text="Check"/>
                 {state.correct? <Success text={`Ja das ist richtig!`}/>:''}
