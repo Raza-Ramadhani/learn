@@ -7,7 +7,7 @@ export default function Page() {
 
     function submit(formData:FormData) {
         const text = formData.get('text')
-        router.push(`/de/komma/run/${encodeURI(text as string)}`)
+        router.push(`/de/komma/run/${encodeURIComponent(text as string)}`)
     }
     return(
         <div>

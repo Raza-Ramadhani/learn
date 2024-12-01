@@ -3,42 +3,66 @@
 import Button from "./button"
 import { deKommaCheck } from "../lib/actions"
 import { useActionState } from "react"
+import Success from "./success"
 
-export default function KommaForm({words, rawText,}:{words:Array<string>, rawText:string}) {
+export default function KommaForm({rawText} : {rawText:string}) {
+    const text = rawText.replaceAll(', ', ' ')
+    const words = text.split(' ')
+    const rawSenteces = text.split('. ')
+    //const rawSenteces = text.split('.')
+    //console.log(rawSenteces)
+    const sentences:Array<{wordsBeforeSentence:number,wordsInSentence:Array<string>}> = []
+    let sentencesLength = 0
+    for (let i = 0; i < rawSenteces.length; i++) {
+        console.log(rawSenteces[i])
+        const wordsInSentence = rawSenteces[i].split(' ')
+        //////console.log(wordsInSentence)
+        sentences.push({wordsBeforeSentence: sentencesLength,wordsInSentence:wordsInSentence})
+        sentencesLength = sentencesLength + wordsInSentence.length
+    }
+//    const sentences = text.split('.')
+////console.log(sentences)
+    
     async function submitFunction(prev:object,formData:FormData) {
         return await deKommaCheck(formData, rawText, words)
     }
-    const [state, submit] = useActionState(submitFunction,{correct:[{correct:true, comma:false}]})
+    const [state, submit] = useActionState(submitFunction,{correct:[{correct:true, comma:false}], everythingCorrect:false})
     return(
         <form action={submit}>
-        <h1 className="text-xl font-bold">Komma</h1>
-        <ol className="list-inside list-decimal text-sm sm:text-left font-[family-name:var(--font-geist-mono)]">
-        <li>Setzen Sie an richtigen Stellen ein Komma. Um schneller Kommas zu setzen, können sie <code className="bg-slate-300 rounded px-1">Tab</code> und <code className="bg-slate-300 rounded px-1">Leerzeichen</code> benutzen</li>
-        <li>Sobald Sie fertig sind, können Sie auf Check klicken, um das Ergebnis zu sehen</li>
-        </ol>
-        <div className="flex flex-wrap my-2 bg-slate-100 rounded p-2">
-        {words.map((word, index) => {
+        <div className="my-2 bg-slate-100 rounded p-2">
+        {sentences.map((sentence, sentenceIndex) => {
+            ////console.log(state.correct.slice(sentence.wordsBeforeSentence,10))
             return(
-                <span 
-                    key={index} 
-                    className="flex justify-center items-center align-middle"
-                >
-                    {word}
-                    <input 
-                        type="checkbox" 
-                        name={index.toString()} 
-                        className={`cursor-pointer w-3 h-4 appearance-none text-black checked:bg-[url('/comma.svg')] bg-cover rounded 
-                            ${state.correct[index]?.correct == false ? 'bg-red-500' : ''}
-                            ${state.correct[index]?.correct == true && state.correct[index]?.comma == true ? 'bg-green-500/50' : ''}
-                            `} 
-                        defaultChecked={state.correct[index]?.comma}
-                    />
-                </span>               
-
+                <span className={`
+                ${state.correct.slice(
+                    sentence.wordsBeforeSentence, 
+                    (sentence.wordsBeforeSentence + sentences[sentenceIndex].wordsInSentence.length))
+                    .some((x) => x.correct==false) ? 'bg-red-300' : ''}`} key={sentenceIndex}>
+                    {sentence.wordsInSentence.map((word:string, index) => {
+                        return(
+                            <span 
+                            key={index} 
+                            className=""
+                        >
+                            {word}{sentence.wordsInSentence.length == index+1 ? '.':'' }{/*(sentence.wordsBeforeSentence + index+1).toString()*/}
+                            <input 
+                                type="checkbox" 
+                                name={(sentence.wordsBeforeSentence + index).toString()} 
+                                className={`cursor-pointer w-3 h-4 appearance-none text-black checked:bg-[url('/comma.svg')] bg-cover rounded 
+                                    ${state.correct[sentence.wordsBeforeSentence + index]?.correct == false ? '' : ''}
+                                    ${state.correct[(sentence.wordsBeforeSentence + index)]?.correct == true && state.correct[index]?.comma == true ? 'bg-green-500/50' : ''}
+                                    `} 
+                                defaultChecked={state.correct[(sentence.wordsBeforeSentence + index)]?.comma}
+                            />
+                        </span>       
+                        )
+                    })}
+                </span>
             )
         })}
         </div>
         <Button text="Check" type="submit"/>
+        {state.everythingCorrect ? <Success/>: ''}
     </form>
     )
 }

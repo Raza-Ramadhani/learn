@@ -3,30 +3,20 @@ import KommaForm from "@/app/ui/komma-form"
 export default async function Page({
     params,
 }: {
-    params: Promise<{ text: string}>
+    params: Promise<{ text: string }>
 }) {
     const rawText = decodeURIComponent((await params).text)
-    const text = rawText.replaceAll(', ',' ')
-    const words = text.split(' ')
-    /*async function submit(formData:FormData) {
-        'use server'
-        console.log(formData.values)
-        const correctWords = rawText.split(' ')
-        var commas = []
-        for (let i = 0; i < words.length; i++) {
-            const checkingWord = `${words[i]}${formData.get(i.toString()) == 'on' ? ',' : ''}`
-            //console.log(formData.get(i.toString()))
-            console.log(checkingWord + " - " + correctWords[i])
-            if (correctWords[i] == checkingWord) {
-                console.log('correct')
-            } else {
-                commas.push(`${checkingWord} is wrong`)
-            }
-        }
 
-        console.log(commas)
-    }*/
-    return(
-<KommaForm words={words} rawText={rawText}/>
+    return (
+        <div>
+            <h1 className="text-xl font-bold">Komma</h1>
+            <ol className="list-inside list-decimal text-sm sm:text-left font-[family-name:var(--font-geist-mono)]">
+                <li>
+                    Setzen Sie an richtigen Stellen ein Komma. Um schneller Kommas zu setzen, können Sie <code className="bg-slate-300 rounded px-1">Tab</code> und <code className="bg-slate-300 rounded px-1">Leerzeichen</code> benutzen
+                </li>
+                <li>Sobald Sie fertig sind, können Sie auf Check klicken, um das Ergebnis zu sehen</li>
+            </ol>
+            <KommaForm rawText={rawText} />
+        </div>
     )
 }
