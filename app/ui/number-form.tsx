@@ -7,31 +7,31 @@ import { useActionState, useEffect, useState } from "react"
 export function NumberForm() {
     const lange:Array<{name:string,units:Array<{name:string,symbol:string,decimal:number}>}> = [
         {name: 'Gewicht', units: [
-            {name: 'Miligramm', symbol:'mg', decimal:0.001},
-            {name: 'Gramm', symbol:'g', decimal:1},
-            {name: 'Kilogramm', symbol:'kg', decimal:1000},
-            {name: 'Kilogramm', symbol:'kg', decimal:1000},
-            {name: 'Tonnen', symbol:'t', decimal:1000000},
+            {name: 'Miligramm', symbol:'mg', decimal:1},
+            {name: 'Gramm', symbol:'g', decimal:1000},
+            {name: 'Kilogramm', symbol:'kg', decimal:1000000},
+            {name: 'Kilogramm', symbol:'kg', decimal:1000000},
+            {name: 'Tonnen', symbol:'t', decimal:1000000000},
         ]},
         {name: 'Länge', units: [
-            {name: 'Kilometer', symbol:'km', decimal:1000},
-            {name: 'Meter', symbol:'m', decimal:1},
-            {name: 'Dezimeter', symbol:'dm', decimal:0.1},
-            {name: 'Zentimeter', symbol:'cm', decimal:0.01},
-            {name: 'Milimeter', symbol:'mm', decimal:0.001},
+            {name: 'Kilometer', symbol:'km', decimal:1000000},
+            {name: 'Meter', symbol:'m', decimal:1000},
+            {name: 'Dezimeter', symbol:'dm', decimal:100},
+            {name: 'Zentimeter', symbol:'cm', decimal:10},
+            {name: 'Milimeter', symbol:'mm', decimal:1},
         ]},
         {name: 'Hohlmassen', units: [
-            {name: 'Mililiter', symbol:'ml', decimal:1000},
-            {name: 'Zentiliter', symbol:'cl', decimal:100},
-            {name: 'Deziliter', symbol:'dl', decimal:10},
-            {name: 'Liter', symbol:'l', decimal:1},
-            {name: 'Hektoliter', symbol:'hl', decimal:100},
+            {name: 'Mililiter', symbol:'ml', decimal:1},
+            {name: 'Zentiliter', symbol:'cl', decimal:10},
+            {name: 'Deziliter', symbol:'dl', decimal:100},
+            {name: 'Liter', symbol:'l', decimal:1000},
+            {name: 'Hektoliter', symbol:'hl', decimal:100000},
         ]}
 
     ]
     function mNumberCheck(prevState: {randomEinheit:number,randomNumber:number,startUnitIndex:number,randomUnitIndex:number, correct:undefined|boolean},formData:FormData) {
         const userNumber = formData.get('value') as unknown as number
-        const multiple = lange[prevState.randomEinheit].units[prevState.randomUnitIndex].decimal / lange[prevState.randomEinheit].units[prevState.startUnitIndex].decimal
+        //const multiple = lange[prevState.randomEinheit].units[prevState.randomUnitIndex].decimal / lange[prevState.randomEinheit].units[prevState.startUnitIndex].decimal
         console.log(prevState)
         if(prevState.correct == true) {
             const startUnitIndex = Math.floor(Math.random() * 4)
