@@ -14,8 +14,8 @@ export function NumberForm() {
             {name: 'Tonnen', symbol:'t', decimal:1000000},
         ]},
         {name: 'Länge', units: [
-            {name: 'Meter', symbol:'m', decimal:1},
             {name: 'Kilometer', symbol:'km', decimal:1000},
+            {name: 'Meter', symbol:'m', decimal:1},
             {name: 'Dezimeter', symbol:'dm', decimal:0.1},
             {name: 'Zentimeter', symbol:'cm', decimal:0.01},
             {name: 'Milimeter', symbol:'mm', decimal:0.001},
@@ -36,16 +36,19 @@ export function NumberForm() {
         if(prevState.correct == true) {
             const startUnitIndex = Math.floor(Math.random() * 4)
             const indexUpOrDown = Math.floor(Math.random() * 1) + 1
+            const makeDecimal = Math.floor(Math.random() * 2) == 0 ? 1 : 0.1
             
             return {
                 randomEinheit: Math.floor(Math.random() *2),
-                randomNumber: Math.floor(Math.random() * 999), 
+                randomNumber: (Math.floor(Math.random() * 999)*makeDecimal).toPrecision(3) as unknown as number, 
                 startUnitIndex: startUnitIndex, 
                 randomUnitIndex: startUnitIndex + indexUpOrDown < 5 ? startUnitIndex+ indexUpOrDown: startUnitIndex - indexUpOrDown,
                 correct: undefined,
             }
         }
-        if ((userNumber * multiple) == prevState.randomNumber) {
+        console.log((userNumber * lange[prevState.randomEinheit].units[prevState.randomUnitIndex].decimal))
+        console.log((lange[prevState.randomEinheit].units[prevState.startUnitIndex].decimal * prevState.randomNumber))
+        if ((userNumber * lange[prevState.randomEinheit].units[prevState.randomUnitIndex].decimal).toPrecision(5) as unknown as number == (lange[prevState.randomEinheit].units[prevState.startUnitIndex].decimal * prevState.randomNumber).toPrecision(5)as unknown as number) {
             return{
                 randomEinheit: prevState.randomEinheit,
                 randomNumber: prevState.randomNumber, 
