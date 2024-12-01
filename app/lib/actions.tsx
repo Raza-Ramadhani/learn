@@ -1,12 +1,12 @@
 'use server'
 
 export async function deKommaCheck(formData:FormData, rawText:string, words:Array<string>) {
-        const correctWords = rawText.split(' ')
+        const correctWords = rawText.split(/(\S+\n?)\s*/).filter(Boolean);
         const commas = []
         let everythingCorrect = true
         for (let i = 0; i < words.length; i++) {
             const checkingWord = `${words[i]}${formData.get(i.toString()) == 'on' ? ',' : ''}`
-            console.log(checkingWord + " - " + correctWords[i])
+            console.log(JSON.stringify(checkingWord) + " - " + JSON.stringify(correctWords[i]))
             if (correctWords[i] == checkingWord) {
                 commas.push({correct:true, comma:formData.get(i.toString()) == 'on' ? true:false})
             } else {

@@ -1,4 +1,5 @@
 'use client'
+//This is in BETA VERSION. CODE CLEANING IN PROGRESS
 
 import Button from "./button"
 import { deKommaCheck } from "../lib/actions"
@@ -7,18 +8,27 @@ import Success from "./success"
 
 export default function KommaForm({rawText} : {rawText:string}) {
     const text = rawText.replaceAll(', ', ' ')
-    const words = text.split(' ')
-    const rawSenteces = text.split('. ')
+    const words = text.split(/(\S+\n?)\s*/).filter(Boolean);
+    const rawSenteces = text.split(/(?<=\.[\s]*)(?!\n)(?=\S)/)
+    //(/(?<=\.[\s]*)(?!\n)(?!\.)/)//(/(?<=[.!?])\s*(?!.)/)//(/(?<=\.)\s*(?!\n)/)//(/(?<=\.)\s*/)
+    console.log(JSON.stringify(words[1]))
+    console.log(rawSenteces);
     //const rawSenteces = text.split('.')
     //console.log(rawSenteces)
     const sentences:Array<{wordsBeforeSentence:number,wordsInSentence:Array<string>}> = []
     let sentencesLength = 0
     for (let i = 0; i < rawSenteces.length; i++) {
-        console.log(rawSenteces[i])
-        const wordsInSentence = rawSenteces[i].split(' ')
+        console.log(JSON.stringify(rawSenteces[i] + '------'))
+        const wordsInSentence = rawSenteces[i].split(/(\S+\n?)\s*/).filter(Boolean);
         //////console.log(wordsInSentence)
+        for (let x= 0;x<wordsInSentence.length; x++) {
+            console.log(JSON.stringify(wordsInSentence[x]))
+        }
+    console.log(JSON.stringify(wordsInSentence[9]))
+
         sentences.push({wordsBeforeSentence: sentencesLength,wordsInSentence:wordsInSentence})
         sentencesLength = sentencesLength + wordsInSentence.length
+        console.log(sentencesLength)
     }
 //    const sentences = text.split('.')
 ////console.log(sentences)
@@ -44,16 +54,19 @@ export default function KommaForm({rawText} : {rawText:string}) {
                             key={index} 
                             className=""
                         >
-                            {word}{sentence.wordsInSentence.length == index+1 ? '.':'' }{/*(sentence.wordsBeforeSentence + index+1).toString()*/}
+                            {word}
+                            {/*(sentence.wordsBeforeSentence + index+1).toString()*/}
                             <input 
                                 type="checkbox" 
                                 name={(sentence.wordsBeforeSentence + index).toString()} 
                                 className={`cursor-pointer w-3 h-4 appearance-none text-black checked:bg-[url('/comma.svg')] bg-cover rounded 
-                                    ${state.correct[sentence.wordsBeforeSentence + index]?.correct == false ? '' : ''}
-                                    ${state.correct[(sentence.wordsBeforeSentence + index)]?.correct == true && state.correct[index]?.comma == true ? 'bg-green-500/50' : ''}
+                                    ${state.correct[sentence.wordsBeforeSentence + index]?.correct == true ? '' : ''}
+                                    ${state.correct[(sentence.wordsBeforeSentence + index)]?.correct == true && state.correct[(sentence.wordsBeforeSentence + index )]?.comma == true ? 'bg-green-500/50' : ''}
                                     `} 
                                 defaultChecked={state.correct[(sentence.wordsBeforeSentence + index)]?.comma}
                             />
+                        {/\r|\n/.exec(word) ? <br></br>: ''}
+
                         </span>       
                         )
                     })}
