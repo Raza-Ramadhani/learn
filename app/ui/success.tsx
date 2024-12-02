@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Button from "./button";
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Reload } from "../lib/actions";
 
 export default function Success() {
