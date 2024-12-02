@@ -9,14 +9,14 @@ export default function Home() {
           
           <h1 className="font-bold text-xl">German</h1>
           <div className="ml-4 w- flex flex-col">
-              <Link href="/de/komma" className=" rounded p-2 hover:bg-yellow-100 transition cursor-pointer">
+              <Link href="/de/komma" className=" rounded p-2 hover:bg-yellow-100 dark:hover:bg-yellow-900 transition cursor-pointer">
                 <h1 className="text-xl font-bold">Komma Übungen</h1>
                 <p className="text-sm">Komma setzen Lorem Ipsum dolor sit amet</p>
               </Link>
           </div>
           <h1 className="font-bold text-xl">Math</h1>
           <div className="ml-4 w- flex flex-col">
-              <Link href="/m/einheiten/a" className=" rounded p-2 transition cursor-pointer hover:bg-blue-100">
+              <Link href="/m/einheiten/a" className=" rounded p-2 transition cursor-pointer dark:hover:bg-blue-900 hover:bg-blue-100">
                 <h1 className="text-xl font-bold">Einheiten Umrechnen</h1>
                 <p className="text-sm">Übungen für die 5.Klasse</p>
               </Link>

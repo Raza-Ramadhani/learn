@@ -38,6 +38,7 @@ export default function KommaForm({rawText} : {rawText:string}) {
     }
     const [state, submit] = useActionState(submitFunction,{correct:[{correct:true, comma:false}], everythingCorrect:false})
     return(
+        <div>
         <form action={submit}>
         <div className="my-2 bg-slate-100 dark:bg-slate-800 rounded p-2">
         {sentences.map((sentence, sentenceIndex) => {
@@ -52,14 +53,14 @@ export default function KommaForm({rawText} : {rawText:string}) {
                         return(
                             <span 
                             key={index} 
-                            className=""
+                            className="inline-block "
                         >
                             {word}
                             {/*(sentence.wordsBeforeSentence + index+1).toString()*/}
                             <input 
                                 type="checkbox" 
                                 name={(sentence.wordsBeforeSentence + index).toString()} 
-                                className={`cursor-pointer w-3 h-4 appearance-none text-black checked:bg-[url('/comma.svg')] bg-cover rounded 
+                                className={`cursor-pointer w-3 h-4 appearance-none text-black checked:bg-[url('/comma.svg')] bg-cover rounded m-0
                                     ${state.correct[sentence.wordsBeforeSentence + index]?.correct == true ? '' : ''}
                                     ${state.correct[(sentence.wordsBeforeSentence + index)]?.correct == true && state.correct[(sentence.wordsBeforeSentence + index )]?.comma == true ? 'bg-green-500/50' : 'dark:invert'}
                                     `} 
@@ -75,7 +76,8 @@ export default function KommaForm({rawText} : {rawText:string}) {
         })}
         </div>
         <Button text="Check" type="submit"/>
-        {state.everythingCorrect ? <Success/>: ''}
     </form>
+        {state.everythingCorrect ? <Success/>: ''}
+    </div>
     )
 }

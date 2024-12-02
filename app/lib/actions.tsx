@@ -1,5 +1,8 @@
 'use server'
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
 export async function deKommaCheck(formData:FormData, rawText:string, words:Array<string>) {
         const correctWords = rawText.split(/(\S+\n?)\s*/).filter(Boolean);
         const commas = []
@@ -84,4 +87,8 @@ export async function mNumberCheck(prevState: {randomEinheit:number,randomNumber
         startUnitIndex: Math.floor(Math.random() * 4), 
         randomUnitIndex: Math.floor(Math.random() * 4),
     }*/
+}
+
+export async function Reload(path:string) {
+    await redirect(path)
 }

@@ -17,7 +17,7 @@ export default function Page() {
                     <li className="mb-2">Text mit Komma einfügen</li>
                     <li>Auf den Button drücken</li>
                 </ol>
-                <textarea name="text" id="text" placeholder="Text..." className="w-full min-h-64 rounded focus:outline-none bg-slate-100 p-1 my-1"></textarea>
+                <textarea name="text" id="text" placeholder="Text..." className="w-full min-h-64 rounded focus:outline-none bg-slate-100 dark:bg-slate-800 p-1 my-1"></textarea>
                 <Button type="submit" text="Starten"/>
             </form>
         </div>
