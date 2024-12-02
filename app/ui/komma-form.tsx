@@ -39,7 +39,7 @@ export default function KommaForm({rawText} : {rawText:string}) {
     const [state, submit] = useActionState(submitFunction,{correct:[{correct:true, comma:false}], everythingCorrect:false})
     return(
         <form action={submit}>
-        <div className="my-2 bg-slate-100 rounded p-2">
+        <div className="my-2 bg-slate-100 dark:bg-slate-800 rounded p-2">
         {sentences.map((sentence, sentenceIndex) => {
             ////console.log(state.correct.slice(sentence.wordsBeforeSentence,10))
             return(
@@ -47,7 +47,7 @@ export default function KommaForm({rawText} : {rawText:string}) {
                 ${state.correct.slice(
                     sentence.wordsBeforeSentence, 
                     (sentence.wordsBeforeSentence + sentences[sentenceIndex].wordsInSentence.length))
-                    .some((x) => x.correct==false) ? 'bg-red-300' : ''}`} key={sentenceIndex}>
+                    .some((x) => x.correct==false) ? 'bg-red-300 dark:bg-red-700' : ''}`} key={sentenceIndex}>
                     {sentence.wordsInSentence.map((word:string, index) => {
                         return(
                             <span 
@@ -61,7 +61,7 @@ export default function KommaForm({rawText} : {rawText:string}) {
                                 name={(sentence.wordsBeforeSentence + index).toString()} 
                                 className={`cursor-pointer w-3 h-4 appearance-none text-black checked:bg-[url('/comma.svg')] bg-cover rounded 
                                     ${state.correct[sentence.wordsBeforeSentence + index]?.correct == true ? '' : ''}
-                                    ${state.correct[(sentence.wordsBeforeSentence + index)]?.correct == true && state.correct[(sentence.wordsBeforeSentence + index )]?.comma == true ? 'bg-green-500/50' : ''}
+                                    ${state.correct[(sentence.wordsBeforeSentence + index)]?.correct == true && state.correct[(sentence.wordsBeforeSentence + index )]?.comma == true ? 'bg-green-500/50' : 'dark:invert'}
                                     `} 
                                 defaultChecked={state.correct[(sentence.wordsBeforeSentence + index)]?.comma}
                             />
