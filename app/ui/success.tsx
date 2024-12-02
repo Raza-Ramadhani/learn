@@ -7,11 +7,6 @@ import { Reload } from "../lib/actions";
 
 export default function Success() {
     const pathname = usePathname()
-    const router = useRouter()
-    /*function reload() {
-        router.push(pathname)
-        
-    }*/
     const [open, setOpen] = useState(true)
     return(
         <div>

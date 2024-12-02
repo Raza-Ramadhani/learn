@@ -1,6 +1,5 @@
 'use server'
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function deKommaCheck(formData:FormData, rawText:string, words:Array<string>) {
@@ -28,14 +27,15 @@ export async function deKommaCheck(formData:FormData, rawText:string, words:Arra
 */
         return {correct:commas, everythingCorrect:everythingCorrect}
 }
+/*
 export async function mNumberCheck(prevState: {randomEinheit:number,randomNumber:number,startUnitIndex:number,randomUnitIndex:number, correct:undefined|boolean},formData:FormData) {
     const lange = [
         {name: 'Gewicht', units: [
-            {name: 'Miligramm', symbol:'mg', decimal:0.001},
+            {name: 'Milligramm', symbol:'mg', decimal:0.001},
             {name: 'Gramm', symbol:'g', decimal:1},
             {name: 'Kilogramm', symbol:'kg', decimal:1000},
-            {name: 'Tonnen', symbol:'t', decimal:1000000},
             {name: 'Kilogramm', symbol:'kg', decimal:1000},
+            {name: 'Tonnen', symbol:'t', decimal:1000000},
         ]},
         {name: 'Länge', units: [
             {name: 'Meter', symbol:'m', decimal:1},
@@ -86,9 +86,9 @@ export async function mNumberCheck(prevState: {randomEinheit:number,randomNumber
         randomNumber: Math.floor(Math.random() * 4), 
         startUnitIndex: Math.floor(Math.random() * 4), 
         randomUnitIndex: Math.floor(Math.random() * 4),
-    }*/
+    }
 }
-
+*/
 export async function Reload(path:string) {
-    await redirect(path)
+    redirect(path)
 }
