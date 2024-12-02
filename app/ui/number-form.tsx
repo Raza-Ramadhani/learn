@@ -7,7 +7,7 @@ import { useActionState, useEffect, useState } from "react"
 export function NumberForm() {
     const lange:Array<{name:string,units:Array<{name:string,symbol:string,decimal:number}>}> = [
         {name: 'Gewicht', units: [
-            {name: 'Miligramm', symbol:'mg', decimal:1},
+            {name: 'Milligramm', symbol:'mg', decimal:1},
             {name: 'Gramm', symbol:'g', decimal:1000},
             {name: 'Kilogramm', symbol:'kg', decimal:1000000},
             {name: 'Kilogramm', symbol:'kg', decimal:1000000},
@@ -21,7 +21,7 @@ export function NumberForm() {
             {name: 'Milimeter', symbol:'mm', decimal:1},
         ]},
         {name: 'Hohlmassen', units: [
-            {name: 'Mililiter', symbol:'ml', decimal:1},
+            {name: 'Milliliter', symbol:'ml', decimal:1},
             {name: 'Zentiliter', symbol:'cl', decimal:10},
             {name: 'Deziliter', symbol:'dl', decimal:100},
             {name: 'Liter', symbol:'l', decimal:1000},
