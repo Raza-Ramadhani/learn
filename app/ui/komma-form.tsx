@@ -53,8 +53,8 @@ export default function KommaForm({rawText} : {rawText:string}) {
                         return(
                             <span 
                             key={index} 
-                            className="inline-block "
                         >
+                            <span className="inline-block">
                             {word}
                             {/*(sentence.wordsBeforeSentence + index+1).toString()*/}
                             <input 
@@ -66,6 +66,7 @@ export default function KommaForm({rawText} : {rawText:string}) {
                                     `} 
                                 defaultChecked={state.correct[(sentence.wordsBeforeSentence + index)]?.comma}
                             />
+                            </span>
                         {/\r|\n/.exec(word) ? <br></br>: ''}
 
                         </span>       
