@@ -1,3 +1,5 @@
+
+
 export default function Page() {
     const sequence:Array<JSX.Element> = [
         ProcessBlock('test'),
@@ -29,7 +31,9 @@ export default function Page() {
             </div>
             <div className="rounded resize-x h-full min-w-36 bg-slate-900 overflow-auto border border-blue-300 direction-[rtl]">
                 <h2>Code <select><option>Python</option></select></h2>
+                <code>
                 <textarea placeholder="ohoupojoijpopoijojo" className="fire-base"/>
+                </code>
             </div>
         </div>
     )
