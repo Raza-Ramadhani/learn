@@ -38,6 +38,7 @@ export default function DezimalForm() {
             }, [])
     return(
         <form action={submit}>
+<h1 className="hidden">{isClient}</h1>
                 <h1 className="font-medium"><code className="bg-slate-300 rounded px-1">{JSON.stringify(state.randomNumber/state.randomMultiplier)} x {JSON.stringify(state.randomMultiplier as number)}</code></h1>
                 <div className="text-5xl flex items-center bg-slate-100 p-2 rounded">
                         <input type='number' placeholder="Zahl"  step={0.000001} name="value" className="w-full bg-transparent appearance-none text-5xl font-meduum font-sans focus:outline-none"/><h1></h1>
