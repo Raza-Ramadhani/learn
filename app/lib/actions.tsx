@@ -121,10 +121,10 @@ export async function CheckNumberScaleTable(prevState: {
         const correctAnswer = prevState.numbers[i].numberInPlan * prevState.multiplier
         const user = formData.get(prevState.numbers[i].id.toString()) as unknown as number
         if (user == correctAnswer) {
-            rawNumbers.push({ id: prevState.numbers[i].id.toString(), numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: true })
+            rawNumbers.push({ id: prevState.numbers[i], numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: true })
         }
         else {
-            rawNumbers.push({ id: prevState.numbers[i].id.toString(), numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: false })
+            rawNumbers.push({ id: prevState.numbers[i], numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: false })
         }
     }
     return { numbers: rawNumbers, multiplier: prevState.multiplier }
