@@ -13,6 +13,7 @@ export default function ScaleTableForm({ firstState }:{ firstState: {
 }}) {
     //const numbers = GetNumbersScaleTable()//[{ id: 0, numberInPlan: 10, numberInReality: 10 }, { id: 1, numberInPlan: 10, numberInReality: undefined }, { id: 2, numberInPlan: 10, numberInReality: 10 }]
 
+
     const [state, submit] = useActionState(CheckNumberScaleTable,firstState)
     return (
         <div>
