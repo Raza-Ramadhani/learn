@@ -39,7 +39,7 @@ export default function ScaleTableForm({ firstState }:{ firstState: {
                                     return (
                                         <td key={number.id}>
                                             <span className={`text-5xl flex items-center p-2 rounded ${number.correct ? 'bg-green-600': 'bg-slate-100'}`}>
-                                                <input defaultValue={number.numberInReality} type='number' placeholder="Zahl" step={0.000001} name="value" className="w-full bg-transparent appearance-none text-5xl font-meduum font-sans focus:outline-none" />
+                                                <input defaultValue={number.numberInReality} id={number.id.toString()} type='number' placeholder="Zahl" step={0.000001} name={number.id.toString()} className="w-full bg-transparent appearance-none text-5xl font-meduum font-sans focus:outline-none" />
                                             </span>
                                         </td>
                                     )
