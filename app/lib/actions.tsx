@@ -2,30 +2,30 @@
 
 import { redirect } from "next/navigation";
 
-export async function deKommaCheck(formData:FormData, rawText:string, words:Array<string>) {
-        const correctWords = rawText.split(/(\S+\n?)\s*/).filter(Boolean);
-        const commas = []
-        let everythingCorrect = true
-        for (let i = 0; i < words.length; i++) {
-            const checkingWord = `${words[i]}${formData.get(i.toString()) == 'on' ? ',' : ''}`
-            console.log(JSON.stringify(checkingWord) + " - " + JSON.stringify(correctWords[i]))
-            if (correctWords[i] == checkingWord) {
-                commas.push({correct:true, comma:formData.get(i.toString()) == 'on' ? true:false})
-            } else {
-                commas.push({correct:false, comma:formData.get(i.toString()) == 'on' ? true:false})
-                everythingCorrect = false
+export async function deKommaCheck(formData: FormData, rawText: string, words: Array<string>) {
+    const correctWords = rawText.split(/(\S+\n?)\s*/).filter(Boolean);
+    const commas = []
+    let everythingCorrect = true
+    for (let i = 0; i < words.length; i++) {
+        const checkingWord = `${words[i]}${formData.get(i.toString()) == 'on' ? ',' : ''}`
+        console.log(JSON.stringify(checkingWord) + " - " + JSON.stringify(correctWords[i]))
+        if (correctWords[i] == checkingWord) {
+            commas.push({ correct: true, comma: formData.get(i.toString()) == 'on' ? true : false })
+        } else {
+            commas.push({ correct: false, comma: formData.get(i.toString()) == 'on' ? true : false })
+            everythingCorrect = false
+        }
+    }
+    /*
+            const sentences = rawText.split('.')
+            const sentencesLength = []
+            for (let i = 0; i < sentences.length; i++) {
+                const wordsInSentence = sentences[i].split(' ')
+                const numberOfWordsInSentence = wordsInSentence.length
+                sentencesLength.push(numberOfWordsInSentence)
             }
-        }
-/*
-        const sentences = rawText.split('.')
-        const sentencesLength = []
-        for (let i = 0; i < sentences.length; i++) {
-            const wordsInSentence = sentences[i].split(' ')
-            const numberOfWordsInSentence = wordsInSentence.length
-            sentencesLength.push(numberOfWordsInSentence)
-        }
-*/
-        return {correct:commas, everythingCorrect:everythingCorrect}
+    */
+    return { correct: commas, everythingCorrect: everythingCorrect }
 }
 /*
 export async function mNumberCheck(prevState: {randomEinheit:number,randomNumber:number,startUnitIndex:number,randomUnitIndex:number, correct:undefined|boolean},formData:FormData) {
@@ -89,6 +89,43 @@ export async function mNumberCheck(prevState: {randomEinheit:number,randomNumber
     }
 }
 */
-export async function Reload(path:string) {
+export async function Reload(path: string) {
     redirect(path)
+}
+
+export async function GetNumbersScaleTable() {
+    const randomMultiplier = Math.floor(Math.random() * 10)
+    const rawNumbers = []
+    for (let i = 0; i < 3; i++) {
+        const randomNumber = Math.floor(Math.random() * 10)
+        rawNumbers.push({ id: i, numberInPlan: randomNumber, numberInReality: undefined, correct: undefined })
+    }
+    const randomNumber = Math.floor(Math.random() * 10)
+    rawNumbers.push({ id: 3, numberInPlan: randomNumber, numberInReality: randomNumber * randomMultiplier, correct: true })
+    console.log({ numbers: rawNumbers, multiplier: randomMultiplier })
+    return { numbers: rawNumbers, multiplier: randomMultiplier }
+}
+
+export async function CheckNumberScaleTable(prevState: {
+    numbers: {
+        id: number;
+        numberInPlan: number;
+        numberInReality: number | undefined;
+        correct: boolean | undefined;
+    }[];
+    multiplier: number;
+}, formData: FormData) {
+    const rawNumbers = []
+    for (let i = 0; i < prevState.numbers.length; i++) {
+        console.log(prevState.numbers[i])
+        const correctAnswer = prevState.numbers[i].numberInPlan * prevState.multiplier
+        const user = formData.get(prevState.numbers[i].id.toString()) as unknown as number
+        if (user == correctAnswer) {
+            rawNumbers.push({ id: prevState.numbers[i].id.toString(), numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: true })
+        }
+        else {
+            rawNumbers.push({ id: prevState.numbers[i].id.toString(), numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: false })
+        }
+    }
+    return { numbers: rawNumbers, multiplier: prevState.multiplier }
 }
