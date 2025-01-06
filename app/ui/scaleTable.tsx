@@ -10,6 +10,7 @@ export default function ScaleTableForm({ firstState }:{ firstState: {
     correct: boolean | undefined;
     }[];
     multiplier: number;
+    finish: boolean;
 }}) {
     //const numbers = GetNumbersScaleTable()//[{ id: 0, numberInPlan: 10, numberInReality: 10 }, { id: 1, numberInPlan: 10, numberInReality: undefined }, { id: 2, numberInPlan: 10, numberInReality: 10 }]
 

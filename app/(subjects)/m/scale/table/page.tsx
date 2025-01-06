@@ -3,6 +3,8 @@ import ScaleTableForm from "@/app/ui/scaleTable"
 
 export default async function Page() {
     return (
-        <ScaleTableForm firstState={await GetNumbersScaleTable()}/>
+        <div>
+            <ScaleTableForm firstState={await GetNumbersScaleTable()}/>
+        </div>
     )
 }

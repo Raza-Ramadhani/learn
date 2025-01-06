@@ -103,7 +103,7 @@ export async function GetNumbersScaleTable() {
     const randomNumber = Math.floor(Math.random() * 10)
     rawNumbers.push({ id: 3, numberInPlan: randomNumber, numberInReality: randomNumber * randomMultiplier, correct: true })
     console.log({ numbers: rawNumbers, multiplier: randomMultiplier })
-    return { numbers: rawNumbers, multiplier: randomMultiplier }
+    return { numbers: rawNumbers, multiplier: randomMultiplier, finish: false }
 }
 
 export async function CheckNumberScaleTable(prevState: {
@@ -114,19 +114,25 @@ export async function CheckNumberScaleTable(prevState: {
         correct: boolean | undefined;
     }[];
     multiplier: number;
+    finish: boolean,
 }, formData: FormData) {
+    if (prevState.finish) {
+        return await GetNumbersScaleTable()
+    }
     const rawNumbers = []
+    let wrong = false
     for (let i = 0; i < prevState.numbers.length; i++) {
         console.log(prevState.numbers[i])
         const correctAnswer = prevState.numbers[i].numberInPlan * prevState.multiplier
         const user = formData.get(prevState.numbers[i].id.toString()) as unknown as number
         if (user == correctAnswer) {
-            rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: true })
+            rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: user, correct: true })
         }
         else {
-            rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: false })
+            rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: user, correct: false })
+            wrong = true
         }
     }
-   console.log({ numbers: rawNumbers, multiplier: prevState.multiplier })
-    return { numbers: rawNumbers, multiplier: prevState.multiplier }
+   console.log({ numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong })
+    return { numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong}
 }
