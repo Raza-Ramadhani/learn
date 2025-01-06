@@ -1,4 +1,4 @@
-import { useActionState, useEffect, useState } from "react"
+import { useActionState} from "react"
 import Button from "./button"
 import Success from "./successMath"
 
@@ -31,11 +31,7 @@ export default function DezimalForm() {
                 randomMultiplier: Math.floor(Math.random() * 99) as number, 
                 correct: undefined as undefined|boolean,
             })
-            const [isClient, setIsClient] = useState(false)
-    
-            useEffect(() => {
-                setIsClient(true)
-            }, [])
+
     return(
         <form action={submit}>
                 <h1 className="font-medium"><code className="bg-slate-300 rounded px-1">{JSON.stringify(state.randomNumber/state.randomMultiplier)} x {JSON.stringify(state.randomMultiplier as number)}</code></h1>

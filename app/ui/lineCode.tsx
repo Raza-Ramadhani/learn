@@ -1,5 +1,5 @@
 'use client'
-export default async function CodeLine({children,
+export default function CodeLine({children,
 }: Readonly<{
   children: React.ReactNode;
 }>){
