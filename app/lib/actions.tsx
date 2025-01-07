@@ -1,6 +1,7 @@
 'use server'
 
 import { redirect } from "next/navigation";
+import { ScaleTable } from "./types";
 
 export async function deKommaCheck(formData: FormData, rawText: string, words: Array<string>) {
     const correctWords = rawText.split(/(\S+\n?)\s*/).filter(Boolean);
@@ -106,16 +107,7 @@ export async function GetNumbersScaleTable() {
     return { numbers: rawNumbers, multiplier: randomMultiplier, finish: false }
 }
 
-export async function CheckNumberScaleTable(prevState: {
-    numbers: {
-        id: number;
-        numberInPlan: number;
-        numberInReality: number | undefined;
-        correct: boolean | undefined;
-    }[];
-    multiplier: number;
-    finish: boolean,
-}, formData: FormData) {
+export async function CheckNumberScaleTable(prevState: ScaleTable, formData: FormData) {
     const rawNumbers = []
     let wrong = false
     for (let i = 0; i < prevState.numbers.length; i++) {

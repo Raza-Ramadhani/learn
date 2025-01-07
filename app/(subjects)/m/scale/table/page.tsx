@@ -1,3 +1,4 @@
+import { ScaleTable } from "@/app/lib/types";
 import TableResetButton from "@/app/ui/newNumberButton";
 import ScaleTableForm from "@/app/ui/scaleTable"
 
@@ -12,7 +13,7 @@ export default async function Page({
     return (
         <div>
                 <TableResetButton/>
-            <ScaleTableForm firstState={values} />
+            <ScaleTableForm firstState={values as ScaleTable} />
         </div>
     )
 }

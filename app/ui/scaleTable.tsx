@@ -1,17 +1,9 @@
 'use client'
 import { CheckNumberScaleTable } from "@/app/lib/actions"
 import { useActionState } from "react"
+import { ScaleTable } from "../lib/types"
 
-export default function ScaleTableForm({ firstState }:{ firstState: {
-    numbers: {
-        id: number;
-        numberInPlan: number;
-        numberInReality: number | undefined;
-    correct: boolean | undefined;
-    }[];
-    multiplier: number;
-    finish: boolean;
-}}) {
+export default function ScaleTableForm({ firstState }:{ firstState: ScaleTable}) {
     //const numbers = GetNumbersScaleTable()//[{ id: 0, numberInPlan: 10, numberInReality: 10 }, { id: 1, numberInPlan: 10, numberInReality: undefined }, { id: 2, numberInPlan: 10, numberInReality: 10 }]
     const [state, submit] = useActionState(CheckNumberScaleTable,firstState)
     return (
@@ -29,21 +21,23 @@ export default function ScaleTableForm({ firstState }:{ firstState: {
                         </tr>
                         <tr>
                             <th>Länge in der Realität</th>
+                            <td>
+
                             {state.numbers.map((number) => {
                                 if (typeof number.numberInReality !== "undefined" && number.correct) {
                                     return (
-                                        <td key={number.id}>{number.numberInReality}</td>
+
+                                            <input id={number.id.toString()} key={number.id} className={`text-5xl flex items-center p-2 rounded ${number.correct ? 'bg-green-600': 'bg-slate-100'}`} name={number.id.toString()}>{number.numberInReality as number}</td>
                                     )
                                 } else {
                                     return (
-                                        <td key={number.id}>
-                                            <span className={`text-5xl flex items-center p-2 rounded ${number.correct ? 'bg-green-600': 'bg-slate-100'}`}>
-                                                <input defaultValue={number.numberInReality} id={number.id.toString()} type='number' placeholder="Zahl" step={0.000001} name={number.id.toString()} className="w-full bg-transparent appearance-none text-5xl font-meduum font-sans focus:outline-none" />
+                                            <span  key={number.id} className={`text-5xl flex items-center p-2 rounded ${number.correct ? 'bg-green-600': 'bg-slate-100'}`}>
+                                                <input defaultValue={number.numberInReality as number} id={number.id.toString()} type='number' placeholder="Zahl" step={0.000001} name={number.id.toString()} className="w-full bg-transparent appearance-none text-5xl font-meduum font-sans focus:outline-none" />
                                             </span>
-                                        </td>
                                     )
                                 }
                             })}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
