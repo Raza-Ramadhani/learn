@@ -1,4 +1,3 @@
-import { GenerateRandomLinkScaleTable, GetNumbersScaleTable } from "@/app/lib/actions"
 import TableResetButton from "@/app/ui/newNumberButton";
 import ScaleTableForm from "@/app/ui/scaleTable"
 

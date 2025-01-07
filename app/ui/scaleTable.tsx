@@ -1,6 +1,5 @@
 'use client'
 import { CheckNumberScaleTable } from "@/app/lib/actions"
-import { useSearchParams } from "next/navigation";
 import { useActionState } from "react"
 
 export default function ScaleTableForm({ firstState }:{ firstState: {
