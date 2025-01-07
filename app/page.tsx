@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TableResetButton from "./ui/newNumberButton";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
                 <h1 className=" font-semibold text-lg">Nothing</h1>
                 <span className="text-sm">Test Lorem Ipusm</span>
               </Link>
+              <TableResetButton/>
           </div>
   
     </div>

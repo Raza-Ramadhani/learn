@@ -1,5 +1,6 @@
 'use client'
 import { CheckNumberScaleTable } from "@/app/lib/actions"
+import { useSearchParams } from "next/navigation";
 import { useActionState } from "react"
 
 export default function ScaleTableForm({ firstState }:{ firstState: {
@@ -13,8 +14,6 @@ export default function ScaleTableForm({ firstState }:{ firstState: {
     finish: boolean;
 }}) {
     //const numbers = GetNumbersScaleTable()//[{ id: 0, numberInPlan: 10, numberInReality: 10 }, { id: 1, numberInPlan: 10, numberInReality: undefined }, { id: 2, numberInPlan: 10, numberInReality: 10 }]
-
-
     const [state, submit] = useActionState(CheckNumberScaleTable,firstState)
     return (
         <div>
@@ -32,7 +31,7 @@ export default function ScaleTableForm({ firstState }:{ firstState: {
                         <tr>
                             <th>Länge in der Realität</th>
                             {state.numbers.map((number) => {
-                                if (typeof number.numberInReality !== "undefined") {
+                                if (typeof number.numberInReality !== "undefined" && number.correct) {
                                     return (
                                         <td key={number.id}>{number.numberInReality}</td>
                                     )

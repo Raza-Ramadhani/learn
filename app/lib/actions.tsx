@@ -100,7 +100,7 @@ export async function GetNumbersScaleTable() {
         const randomNumber = Math.floor(Math.random() * 10)
         rawNumbers.push({ id: i, numberInPlan: randomNumber, numberInReality: undefined, correct: undefined })
     }
-    const randomNumber = Math.floor(Math.random() * 10)
+    const randomNumber = Math.floor(Math.random() * 10) + 1
     rawNumbers.push({ id: 3, numberInPlan: randomNumber, numberInReality: randomNumber * randomMultiplier, correct: true })
     console.log({ numbers: rawNumbers, multiplier: randomMultiplier })
     return { numbers: rawNumbers, multiplier: randomMultiplier, finish: false }
@@ -116,9 +116,6 @@ export async function CheckNumberScaleTable(prevState: {
     multiplier: number;
     finish: boolean,
 }, formData: FormData) {
-    if (prevState.finish) {
-        return await GetNumbersScaleTable()
-    }
     const rawNumbers = []
     let wrong = false
     for (let i = 0; i < prevState.numbers.length; i++) {
@@ -129,10 +126,21 @@ export async function CheckNumberScaleTable(prevState: {
             rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: user, correct: true })
         }
         else {
-            rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: user, correct: false })
-            wrong = true
+            if (prevState.numbers[i].correct) {
+                rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i], correct: true })
+            }
+            else{
+
+                rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: user, correct: false })
+                wrong = true
+            }
         }
     }
    console.log({ numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong })
     return { numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong}
+}
+
+export async function GenerateRandomLinkScaleTable() {
+    const values = await GetNumbersScaleTable()
+    redirect(`/m/scale/table?value=${JSON.stringify(values)}`)
 }
