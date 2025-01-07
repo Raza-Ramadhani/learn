@@ -108,6 +108,9 @@ export async function GetNumbersScaleTable() {
 }
 
 export async function CheckNumberScaleTable(prevState: ScaleTable, formData: FormData) {
+    if (prevState.finish) {
+        await GenerateRandomLinkScaleTable()
+    }
     const rawNumbers = []
     let wrong = false
     for (let i = 0; i < prevState.numbers.length; i++) {
