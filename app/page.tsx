@@ -1,5 +1,6 @@
 import Link from "next/link";
 import TableResetButton from "./ui/newNumberButton";
+import { GenerateRandomLinkScaleTable } from "./lib/actions";
 
 export default function Home() {
   return (
@@ -19,6 +20,10 @@ export default function Home() {
           <div className="ml-4 w- flex flex-col">
               <Link href="/m/einheiten/a" className=" rounded p-2 transition cursor-pointer dark:hover:bg-blue-900 hover:bg-blue-100">
                 <h1 className="text-xl font-bold">Einheiten Umrechnen</h1>
+                <p className="text-sm">Übungen für die 5.Klasse</p>
+              </Link>
+              <Link href={'/'} onClick={GenerateRandomLinkScaleTable} className=" rounded p-2 transition cursor-pointer dark:hover:bg-blue-900 hover:bg-blue-100">
+                <h1 className="text-xl font-bold">Masstäbe</h1>
                 <p className="text-sm">Übungen für die 5.Klasse</p>
               </Link>
               <Link href="/m/dezimal" className=" rounded p-2 transition cursor-pointer dark:hover:bg-blue-900 hover:bg-blue-100">

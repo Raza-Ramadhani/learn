@@ -95,16 +95,16 @@ export async function Reload(path: string) {
 }
 
 export async function GetNumbersScaleTable() {
-    const randomMultiplier = Math.floor(Math.random() * 10)
+    const randomMultiplier = Math.floor(Math.random() * 30)+1
     const rawNumbers = []
     for (let i = 0; i < 3; i++) {
-        const randomNumber = Math.floor(Math.random() * 10)
+        const randomNumber = Math.floor(Math.random() * 20)
         rawNumbers.push({ id: i, numberInPlan: randomNumber, numberInReality: undefined, correct: undefined })
     }
-    const randomNumber = Math.floor(Math.random() * 10) + 1
+    const randomNumber = Math.floor(Math.random() * 20) + 1
     rawNumbers.push({ id: 3, numberInPlan: randomNumber, numberInReality: randomNumber * randomMultiplier, correct: true })
     console.log({ numbers: rawNumbers, multiplier: randomMultiplier })
-    return { numbers: rawNumbers, multiplier: randomMultiplier, finish: false }
+    return { numbers: rawNumbers, multiplier: randomMultiplier, finish: false } as ScaleTable
 }
 
 export async function CheckNumberScaleTable(prevState: ScaleTable, formData: FormData) {
@@ -122,7 +122,7 @@ export async function CheckNumberScaleTable(prevState: ScaleTable, formData: For
         }
         else {
             if (prevState.numbers[i].correct) {
-                rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i], correct: true })
+                rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: true })
             }
             else{
 

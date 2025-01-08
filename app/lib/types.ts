@@ -1,10 +1,10 @@
 export type ScaleTable = {
-    numbers: {
+    numbers: Array<{
         id: number;
         numberInPlan: number;
         numberInReality: number | undefined;
         correct: boolean | undefined;
-    }[];
+    }>,
     multiplier: number;
     finish: boolean,
 }
