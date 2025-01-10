@@ -1,7 +1,7 @@
 'use server'
 
 import { redirect } from "next/navigation";
-import { ScaleTable } from "./types";
+import { factorizeType, ScaleTable } from "./types";
 
 export async function deKommaCheck(formData: FormData, rawText: string, words: Array<string>) {
     const correctWords = rawText.split(/(\S+\n?)\s*/).filter(Boolean);
@@ -95,7 +95,7 @@ export async function Reload(path: string) {
 }
 
 export async function GetNumbersScaleTable() {
-    const randomMultiplier = Math.floor(Math.random() * 30)+1
+    const randomMultiplier = Math.floor(Math.random() * 30) + 1
     const rawNumbers = []
     for (let i = 0; i < 3; i++) {
         const randomNumber = Math.floor(Math.random() * 20)
@@ -124,18 +124,68 @@ export async function CheckNumberScaleTable(prevState: ScaleTable, formData: For
             if (prevState.numbers[i].correct) {
                 rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: prevState.numbers[i].numberInReality, correct: true })
             }
-            else{
+            else {
 
                 rawNumbers.push({ id: prevState.numbers[i].id, numberInPlan: prevState.numbers[i].numberInPlan, numberInReality: user, correct: false })
                 wrong = true
             }
         }
     }
-   console.log({ numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong })
-    return { numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong}
+    console.log({ numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong })
+    return { numbers: rawNumbers, multiplier: prevState.multiplier, finish: !wrong }
 }
 
 export async function GenerateRandomLinkScaleTable() {
     const values = await GetNumbersScaleTable()
     redirect(`/m/scale/table?value=${JSON.stringify(values)}`)
 }
+export async function factorizeNumber(prevState: any, formData: FormData) {
+    const enteredNumber = formData.get('number') as unknown as number
+    console.log(enteredNumber)
+
+    let x = enteredNumber
+    let i = 2;
+    const primes = [];
+    if (x < 0) {
+        const result: factorizeType = {
+            factorize: [],
+            isPrime: undefined,
+            fieldData: { number: enteredNumber },
+            error: 'Number should be positive'
+        } as factorizeType
+        return result
+    }
+    if (x <= 3) {
+        const result: factorizeType = {
+            factorize: [x],
+            isPrime: true,
+            fieldData: { number: enteredNumber },
+            error: null
+        } as factorizeType
+        return result
+    }
+    for (let step = 0; step <= enteredNumber; step++) {
+        if (x % i === 0) {
+            if (x === i) {
+                primes.push(i);
+                break
+            } else {
+                primes.push(i);
+                x = x / i
+                i = 2
+            }
+        } else {
+            i = i + 1
+        }
+        console.log(x, i)
+    }
+    await new Promise(res => setTimeout(res, 3000))
+    const result: factorizeType = {
+        factorize: primes,
+        isPrime: (primes.length != 0),
+        fieldData: { number: enteredNumber },
+        error: null
+    } as factorizeType
+
+    return result
+} 
