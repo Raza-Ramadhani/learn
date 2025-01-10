@@ -139,7 +139,7 @@ export async function GenerateRandomLinkScaleTable() {
     const values = await GetNumbersScaleTable()
     redirect(`/m/scale/table?value=${JSON.stringify(values)}`)
 }
-export async function factorizeNumber(prevState: any, formData: FormData) {
+export async function factorizeNumber(prevState: unknown, formData: FormData) {
     const enteredNumber = formData.get('number') as unknown as number
     console.log(enteredNumber)
 

@@ -6,7 +6,7 @@ import Button from "@/app/ui/button";
 import { useActionState } from "react";
 
 export default function Page() {
-    function factorizeNumber(prevState: any, formData: FormData) {
+    function factorizeNumber(prevState: unknown, formData: FormData) {
         const enteredNumber = formData.get('number') as unknown as number
         console.log(enteredNumber + "entered number")
 

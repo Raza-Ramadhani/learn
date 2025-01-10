@@ -18,6 +18,7 @@ export default function Page() {
             </div>
             <div className="p-4 flex items-center w-full justify-center">
                 <div className="min-w-24">
+                    
                     {sequence.map((Block: JSX.Element) => Block)}
                     {sequence.map((Block: JSX.Element) => {
                         return(
