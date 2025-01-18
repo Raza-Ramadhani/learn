@@ -12,7 +12,7 @@ export default async function Page({
     console.log(values)
     return (
         <div className="w-full max-h-svh overflow-y-hidden h-svh -m-4">
-            <h1 className="text-xl font-bold">Masstäbe  </h1>
+            <h1 className="text-xl font-bold">Verkleinern und vergrößern</h1>
                
             <div className="h-full w-full flex flex-col items-center justify-center">
                 <ScaleTableForm firstState={values as ScaleTable} />

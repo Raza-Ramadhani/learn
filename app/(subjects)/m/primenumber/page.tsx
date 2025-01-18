@@ -61,9 +61,9 @@ export default function Page() {
     const [state, action, isPending] = useActionState(factorizeNumber, { factorize: [], isPrime: undefined, fieldData: { number: 0 }, error: null } as factorizeType)
     return (
         <div>
-            <h1 className="">Is Prime</h1>
+            <h1 className="">Is Prime <code className="p-1 bg-blue-100 text-sm rounded">Beta version</code></h1>
             <ol className=" list-inside list-decimal text-sm sm:text-left font-[family-name:var(--font-geist-mono)]">
-                <li className="mb-2">natürliche Zahl eingeben</li>
+                <li className="mb-2">Natürliche Zahl eingeben</li>
                 <li>Auf <code className="p-1 bg-slate-100">Check</code> klicken</li>
             </ol>
             <form action={action} className="flex flex-col mt-2 gap-2">
