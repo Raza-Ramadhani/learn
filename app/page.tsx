@@ -1,5 +1,4 @@
 import Link from "next/link";
-import TableResetButton from "./ui/newNumberButton";
 import { GenerateRandomLinkScaleTable } from "./lib/actions";
 import Image from "next/image";
 
