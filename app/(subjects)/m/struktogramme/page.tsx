@@ -87,7 +87,7 @@ function LineBlock(line:string) {
         
     )
 }
-function countLeadingSpaces(str:string) {
+/*function countLeadingSpaces(str:string) {
   let count = 0;
   for (let i = 0; i < str.length; i++) {
     if (str[i] === ' ') {
@@ -97,7 +97,7 @@ function countLeadingSpaces(str:string) {
     }
   }
   return count;
-}
+}*/
 function getMarginLeft(str:string) {
     const tab = "\t";
     let line = str
