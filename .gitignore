@@ -39,4 +39,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/app/(subjects)/m/struktogramme
+/app/(subjects)/m/struktogramme/test

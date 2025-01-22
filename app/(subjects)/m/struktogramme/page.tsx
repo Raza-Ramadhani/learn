@@ -1,84 +1,152 @@
+'use client'
+import { useEffect, useState } from "react"
+import Image from "next/image"
 
+export default function PythonToStuktogramme() {
+    const [pythonCode, setPythonCode] = useState("")
+    const [lines, setLines] = useState([])
+    useEffect(() => {
+        setLines(pythonCode.split('\n'))
+    }, [pythonCode])
+    return(
+        <div>
+            <h1>Python to Stuktogramme</h1>
+            <p>Diese Funktion ist noch in der Beta Version</p>
+            <p>Sie können bis zu drei ineinander gestellte Loops machen, bei zeilen die in einer if sind - müssen sie ein #ifshorten stellen pro if</p>
 
-export default function Page() {
-    const sequence:Array<JSX.Element> = [
-        ProcessBlock('test'),
-        InputBlock(),
-        ProcessBlock('h'),
-        Conditional(),
-      ];    return(
-        <div className="flex flex-row h-svh w-full absolute inset-0 p-4">
-            <div className="max-w-80 bg-blue-100 h-full rounded p-4 w-[20%]">
-                <div className="p-2 bg-orange-200 rounded w-full">
-                    <h1 className="text-xl font-bold">Under Construction</h1>
-                    <p>TBA</p>
-                </div>
-                <h1 className="text-2xl font-bold">Struktogramme</h1>
-            
-            </div>
-            <div className="p-4 flex items-center w-full justify-center">
-                <div className="min-w-24">
-                    
-                    {sequence.map((Block: JSX.Element) => Block)}
-                    {sequence.map((Block: JSX.Element) => {
-                        return(
-                            <div key={Math.random()}>
-                                {Block}
-                            </div>
-                        )
-                    })}
-                </div>
+                <textarea onChange={(e) => setPythonCode(e.target.value)} value={pythonCode} name="pythonCode" id="pythonCode"/>
+            <h1>Python verküzter Code</h1>
+            <pre>{pythonCode}</pre>
+            <h1>Struktogramm</h1>
+            <div className="flex flex-col max-w-[500px] p-2">
 
-            </div>
-            <div className="rounded resize-x h-full min-w-36 bg-slate-900 overflow-auto border border-blue-300 direction-[rtl]">
-                <h2>Code <select><option>Python</option></select></h2>
-                <code>
-                <textarea placeholder="ohoupojoijpopoijojo" className="fire-base"/>
-                </code>
+            {lines.map((line, index) => {
+                
+                return(
+                    <div key={index} className="">
+                        {LineBlock(line)}
+                    </div>
+                )
+            })}
             </div>
         </div>
     )
 }
 
-function OuterBlock({children,
-}: Readonly<{
-  children: React.ReactNode;
-}>){
+function Block({text, className, ifBlock}:{text:string, className:string, ifBlock?:boolean}) {
+    //console.log(className)
     return(
-        <div className="" draggable>
-            {children}
-        </div>
+        <div className={`${className} border-x border-y p-2 border-black relative`}>{text.replaceAll('#ifshorten','')} {ifBlock? 
+        <Image
+            alt="Mountains"
+            src={'/ifBackground.svg'}
+            width={50}
+            height={50}
+            className="w-full h-full absolute top-0 left-0 object-fill"/> : ''}</div>
     )
 }
 
-function ProcessBlock(variable:string) {
+function LineBlock(line:string) {
+    let defineVariable = /[A-Za-z0-9]+\s+=\s+[A-Za-z0-9]+/i;
+    //console.log(JSON.stringify(line))
+    //let input = /[A-Za-z0-9]+\s+=\s+[A-Za-z0-9]+input\($\)\)/i;
+    //let print = /[A-Za-z0-9]+\s+print\([A-Za-z0-9]+\)/i;
+    //let leftSpace = getMarginLeft(line)
+    let style = ` ${getMarginLeft(line)} ${isIfBefore(line)} `
+
+    if (line == "") {
+        return
+    }
+    if (line.indexOf('print') >= 0) {
+        const variale = line.replace('print','')
+        return(
+            <Block className={style} text={`Ausgabe: ${variale}`}/>
+        )
+    }
+    
+    if (line.indexOf('input') >= 0) {
+        const variable = line.split("=")
+        return(
+            <Block className={style} text={`Eingabe: ${variable[0]}`}/>
+        )
+    }
+    if (defineVariable.test(line)) {
+        const variable = line.split("=")
+        return(
+            <Block className={style} text={`${variable[0]} := ${variable[1]}`}/>
+        )
+    }
+    if (line.indexOf('if') >= 0 && !(line.indexOf('#ifshorten') >= 0)) {
+        const variale = line.replace('if','')
+        return(
+            <Block className={`${style} text-center`} text={`${variale}`} ifBlock/>
+        )
+    }
     return(
-        <OuterBlock>
-            <span>
-                {variable}
-                x:= x +
-            </span>
-        </OuterBlock>
+        <Block className={style} text={line}/>
+        
     )
 }
-
-function InputBlock() {
-    return(
-        <OuterBlock>
-            <span>
-
-            </span>
-        </OuterBlock>
-    )
+function countLeadingSpaces(str:string) {
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === ' ') {
+      count++;
+    } else {
+      break; // Stop counting after the first non-space character
+    }
+  }
+  return count;
 }
+function getMarginLeft(str:string) {
+    const tab = "\t";
+    let line = str
+    if (isIfBefore(line) == "w-1/2") {
+       line = line.replace("    ","")
+    }
+    if (isIfBefore(line) == "w-1/4") {
+        line = line.replace("        ","")
+     }
+     if (isIfBefore(line) == "w-1/8") {
+        line = line.replace("            ","")
+     }
+    //let leftSpace = 'ml-[30px]'
+    //let tabSize = 4
+    if (line.startsWith(tab) || line.startsWith("                    ")) {
+        //const spaces = countLeadingSpaces(line)
+        return `  ml-[150px]`
+    }
+    if (line.startsWith(tab) || line.startsWith("                ")) {
+        //const spaces = countLeadingSpaces(line)
+        return `  ml-[120px]`
+    }
+    if (line.startsWith(tab) || line.startsWith("            ")) {
+        //const spaces = countLeadingSpaces(line)
+        return `  ml-[90px]`
+    }
+    if (line.startsWith(tab) || line.startsWith("        ")) {
+        //const spaces = countLeadingSpaces(line)
+        return ` ml-[60px]`
+    }
+    if (line.startsWith(tab) || line.startsWith("    ")) {
+        //const spaces = countLeadingSpaces(line)
+        return `  ml-[30px]`
+    }
+    return ""
+}
+function isIfBefore(str:string) {
+    const array = str.split(" ")
+    //console.log(array)
+    let counter = 0
+    for (const word of array) {
+        console.log(word)
+        if (word == '#ifshorten') {
+            counter = counter + 1
+        }
+    }
+    if (counter == 3) return "w-1/8"
+    if (counter == 2) return "w-1/4"
+    if (counter == 1) return "w-1/2"
 
-
-function Conditional() {
-    return(
-        <OuterBlock>
-            <span>
-Conditional
-            </span>
-        </OuterBlock>
-    )
+    return ""
 }
