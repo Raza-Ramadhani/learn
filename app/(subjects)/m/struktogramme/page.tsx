@@ -4,10 +4,6 @@ import Image from "next/image"
 
 export default function PythonToStuktogramme() {
     const [pythonCode, setPythonCode] = useState("")
-    const [lines, setLines] = useState([])
-    useEffect(() => {
-        setLines(pythonCode.split('\n'))
-    }, [pythonCode])
     return(
         <div>
             <h1>Python to Stuktogramme</h1>
@@ -20,7 +16,7 @@ export default function PythonToStuktogramme() {
             <h1>Struktogramm</h1>
             <div className="flex flex-col max-w-[500px] p-2">
 
-            {lines.map((line, index) => {
+            {pythonCode.split('\n').map((line, index) => {
                 
                 return(
                     <div key={index} className="">
