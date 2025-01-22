@@ -47,12 +47,12 @@ function Block({text, className, ifBlock}:{text:string, className:string, ifBloc
 }
 
 function LineBlock(line:string) {
-    let defineVariable = /[A-Za-z0-9]+\s+=\s+[A-Za-z0-9]+/i;
+    const defineVariable = /[A-Za-z0-9]+\s+=\s+[A-Za-z0-9]+/i;
     //console.log(JSON.stringify(line))
     //let input = /[A-Za-z0-9]+\s+=\s+[A-Za-z0-9]+input\($\)\)/i;
     //let print = /[A-Za-z0-9]+\s+print\([A-Za-z0-9]+\)/i;
     //let leftSpace = getMarginLeft(line)
-    let style = ` ${getMarginLeft(line)} ${isIfBefore(line)} `
+    const style = ` ${getMarginLeft(line)} ${isIfBefore(line)} `
 
     if (line == "") {
         return
