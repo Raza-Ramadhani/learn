@@ -41,8 +41,8 @@ export default function Home() {
       <h1 className="font-bold text-xl">Angewandte Mathematik</h1>
       <div className="ml-4 w- flex flex-col">
         <Link href="/m/struktogramme" className=" rounded p-2 transition cursor-pointer dark:hover:bg-blue-900 hover:bg-cyan-50">
-          <h1 className="text-xl font-bold">Python - Struktogramme Übersetzer <small className="p-2 rounded bg-slate-300 text-sm">Beta Vesion</small></h1>
-          <p className="text-sm">Gym 1</p>
+          <h1 className="text-xl font-bold">Python - Struktogramm Übersetzer <small className="p-2 rounded bg-slate-300 text-sm">Beta Version</small></h1>
+          <p className="text-sm">Python in ein Struktogramm übersetzen</p>
         </Link>
       </div>
     </div>
